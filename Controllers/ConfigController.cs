@@ -20,12 +20,9 @@ namespace AspNetCoreConfigurationDemo.Controllers
         [HttpGet("api/config-providers")]
         public ActionResult GetProviders()
         {
-            string result = "";
-
-            foreach (var provider in (_configRoot.Providers.ToList()))
-            {
-                result += provider.ToString() + "\n";
-            }
+            var result = _configRoot.Providers
+                .Select(provider => provider.ToString())
+                .ToList();
 
             return Ok(result);
         }
@@ -33,12 +30,9 @@ namespace AspNetCoreConfigurationDemo.Controllers
         [HttpGet("api/config")]
         public ActionResult GetAll()
         {
-            var result = "";
-
-            foreach (var configKvp in _config.AsEnumerable())
-            {
-                result += $"{configKvp.Key} => '{configKvp.Value}'\n";
-            }
+            var result = _config.AsEnumerable()
+                .Select(configKvp => $"{configKvp.Key} => '{configKvp.Value}'")
+                .ToList();
 
             return Ok(result);
         }
@@ -58,20 +52,15 @@ namespace AspNetCoreConfigurationDemo.Controllers
             var providerConfig = new ConfigurationRoot(new List<IConfigurationProvider> { provider })
                 .AsEnumerable();
 
-            var result =
-                $"Name\n" +
-                $"====\n" +
-                $"{provider}\n" +
-                $"\n" +
-                $"Values\n" +
-                $"======\n";
+            var config = providerConfig
+                .Select(configKvp => $"{configKvp.Key} => '{configKvp.Value}'")
+                .ToList();
 
-            foreach (var configKvp in providerConfig.AsEnumerable())
+            return Ok(new
             {
-                result += $"{configKvp.Key} => '{configKvp.Value}'\n";
-            }
-
-            return Ok(result);
+                name = provider.ToString(),
+                config = config,
+            });
         }
     }
 }
