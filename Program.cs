@@ -18,6 +18,19 @@ namespace AspNetCoreConfigurationDemo
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, configBuilder) =>
+                {
+                    configBuilder.Sources.Clear();
+                    configBuilder.AddConfiguration(hostingContext.Configuration);
+
+                    var env = hostingContext.HostingEnvironment;
+
+                    configBuilder.AddJsonFile("appsettings.json", true);
+                    configBuilder.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
+                    configBuilder.AddUserSecrets<Startup>();
+                    configBuilder.AddEnvironmentVariables();
+                    configBuilder.AddCommandLine(args);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
