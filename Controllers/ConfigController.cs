@@ -17,6 +17,9 @@ namespace AspNetCoreConfigurationDemo.Controllers
             _configRoot = (IConfigurationRoot)config;
         }
 
+        /// <summary>
+        /// Get a list of all configuration providers.
+        /// </summary>
         [HttpGet("api/config-providers")]
         public ActionResult GetProviders()
         {
@@ -27,6 +30,9 @@ namespace AspNetCoreConfigurationDemo.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get a list of all effective configuration.
+        /// </summary>
         [HttpGet("api/config")]
         public ActionResult GetAll()
         {
@@ -37,6 +43,9 @@ namespace AspNetCoreConfigurationDemo.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Get a list of all configuration for the provider at the supplied index.
+        /// </summary>
         [HttpGet("api/config-providers/{index}")]
         public ActionResult GetProvider(int index)
         {
