@@ -12,3 +12,9 @@ You should also be able to run it with `dotnet run` from the command line.
 
 When the project launches naviaget to https://localhost:5001 (if it doesn't automatically open) and
 you will get a Swagger UI which you can use to call the endpoints.
+
+## Key Vault
+Config is loaded from Key Vault if the `KeyVaultName` config is found in the rest of the configuration.
+I.e. if you want to add configuration from a keyvault:
+- Add `KeyVaultName` with the name of the key vault somewhere e.g. appsettings.json or environment variable.
+- Ensure that you have get and list secret permissions in your access policy for the key vault.
