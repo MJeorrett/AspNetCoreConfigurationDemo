@@ -15,6 +15,7 @@ you will get a Swagger UI which you can use to call the endpoints.
 
 ## Key Vault
 Config is loaded from Key Vault if the `KeyVaultName` config is found in the rest of the configuration.
-I.e. if you want to add configuration from a keyvault:
-- Add `KeyVaultName` with the name of the key vault somewhere e.g. appsettings.json or environment variable.
-- Ensure that you have get and list secret permissions in your access policy for the key vault.
+The project is set up to authenticate to Key Vault as the user signed in to Visual Studio using MSI.
+If you want to add configuration from a keyvault:
+- Add `KeyVaultName` environment variable containing the name of your key vault.
+- Ensure that you have get and list secret permissions in the access policy for the key vault.
